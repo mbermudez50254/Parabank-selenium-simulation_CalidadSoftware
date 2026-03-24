@@ -4,10 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.time.Duration;
 import java.util.UUID;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -23,6 +21,23 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
+/**
+ * Simulación de pruebas automatizadas para la aplicación ParaBank.
+ *
+ * Este proyecto implementa una serie de casos de prueba funcionales
+ * automatizados utilizando Selenium WebDriver, Java y JUnit.
+ *
+ * Casos de prueba implementados:
+ * TC001 - Navegación al formulario de registro
+ * TC002 - Registro exitoso de usuario
+ * TC003 - Inicio de sesión exitoso
+ * TC004 - Apertura de nueva cuenta
+ * TC005 - Visualización de cuentas
+ * TC006 - Transferencia exitosa
+ * TC007 - Validación de transferencia con monto superior al saldo
+ */
+    
 public class miPrimerSimulacion {
 
     private WebDriver driver;
@@ -335,9 +350,9 @@ public class miPrimerSimulacion {
         }
     }
 
-    // =========================
-    // MÉTODOS DE APOYO
-    // =========================
+ // =========================================================================================================
+// MÉTODOS DE APOYO (los utilizo principalmente para poder grabar y que se aprecie bien cada caso de Prueba)
+// =========================================================================================================
 
     private WebElement esperarVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
