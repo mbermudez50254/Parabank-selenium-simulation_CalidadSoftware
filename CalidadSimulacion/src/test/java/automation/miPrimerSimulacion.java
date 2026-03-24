@@ -64,7 +64,7 @@ public class miPrimerSimulacion {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
     }
 
     @Test
@@ -85,9 +85,9 @@ public class miPrimerSimulacion {
         assertTrue(loginButton.isDisplayed());
         assertTrue(registerLink.isDisplayed());
 
-        pausas();
+        esperas();
         registerLink.click();
-        pausaPantalla();
+        esperaPantalla();
 
         assertTrue(driver.getCurrentUrl().contains("register.htm"));
 
@@ -100,7 +100,7 @@ public class miPrimerSimulacion {
     @Test
     public void tc002_registroExitosoUsuario() {
         driver.get(REGISTER_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         String usernameDinamico = "mariapaula_" + UUID.randomUUID().toString().substring(0, 8);
 
@@ -116,9 +116,9 @@ public class miPrimerSimulacion {
         escribirLento(esperarVisible(By.id("customer.password")), "admin1234", 70);
         escribirLento(esperarVisible(By.id("repeatedPassword")), "admin1234", 70);
 
-        pausas();
+        esperas();
         esperarVisible(By.cssSelector("input.button[value='Register']")).click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement welcomeTitle = esperarVisible(By.cssSelector("#rightPanel h1.title"));
         WebElement successMessage = esperarVisible(
@@ -133,7 +133,7 @@ public class miPrimerSimulacion {
     @Test
     public void tc003_loginExitoso() {
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         login("john", "demo");
 
@@ -154,14 +154,14 @@ public class miPrimerSimulacion {
     @Test
     public void tc004_aperturaNuevaCuenta() {
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         login("john", "demo");
 
         WebElement openNewAccountLink = esperarVisible(By.linkText("Open New Account"));
-        pausas();
+        esperas();
         openNewAccountLink.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement typeDropdownElement = esperarVisible(By.id("type"));
         WebElement fromAccountDropdownElement = esperarVisible(By.id("fromAccountId"));
@@ -175,14 +175,14 @@ public class miPrimerSimulacion {
 
         Select typeDropdown = new Select(typeDropdownElement);
         typeDropdown.selectByVisibleText("SAVINGS");
-        pausas();
+        esperas();
 
         String cuentaOrigen = seleccionarPrimeraOpcionDisponible(fromAccountDropdownElement);
         assertFalse(cuentaOrigen.isEmpty());
-        pausas();
+        esperas();
 
         openNewAccountButton.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement openAccountResult = esperarVisible(By.id("openAccountResult"));
         WebElement resultTitle = esperarVisible(By.cssSelector("#openAccountResult h1.title"));
@@ -201,14 +201,14 @@ public class miPrimerSimulacion {
     @Test
     public void tc005_visualizacionAccountsOverview() {
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         login("john", "demo");
 
         WebElement accountsOverviewLink = esperarVisible(By.linkText("Accounts Overview"));
-        pausas();
+        esperas();
         accountsOverviewLink.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement overviewContainer = esperarVisible(By.id("overviewAccountsApp"));
         WebElement overviewTitle = esperarVisible(By.cssSelector("#overviewAccountsApp h1.title"));
@@ -238,14 +238,14 @@ public class miPrimerSimulacion {
     @Test
     public void tc006_transferenciaExitosa() {
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         login("john", "demo");
 
         WebElement transferFundsLink = esperarVisible(By.linkText("Transfer Funds"));
-        pausas();
+        esperas();
         transferFundsLink.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement amountField = esperarVisible(By.id("amount"));
         WebElement fromAccountDropdownElement = esperarVisible(By.id("fromAccountId"));
@@ -263,17 +263,17 @@ public class miPrimerSimulacion {
 
         amountField.clear();
         escribirLento(amountField, "100", 90);
-        pausas();
+        esperas();
 
         String fromAccount = seleccionarPrimeraOpcionDisponible(fromAccountDropdownElement);
-        pausas();
+        esperas();
 
         String toAccount = seleccionarCuentaDestinoDiferente(toAccountDropdownElement, fromAccount);
         assertFalse(toAccount.isEmpty());
-        pausas();
+        esperas();
 
         transferButton.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement transferCompleteTitle = esperarVisible(By.cssSelector("#showResult h1.title"));
         assertTrue(transferCompleteTitle.isDisplayed());
@@ -286,14 +286,14 @@ public class miPrimerSimulacion {
     @Test
     public void tc007_validacionTransferenciaMontoAlto() {
         driver.get(BASE_URL);
-        pausaPantalla();
+        esperaPantalla();
 
         login("john", "demo");
 
         WebElement transferFundsLink = esperarVisible(By.linkText("Transfer Funds"));
-        pausas();
+        esperas();
         transferFundsLink.click();
-        pausaPantalla();
+        esperaPantalla();
 
         WebElement amountField = esperarVisible(By.id("amount"));
         WebElement fromAccountDropdownElement = esperarVisible(By.id("fromAccountId"));
@@ -311,16 +311,16 @@ public class miPrimerSimulacion {
 
         amountField.clear();
         escribirLento(amountField, "5000", 90);
-        pausas();
+        esperas();
 
         String fromAccount = seleccionarPrimeraOpcionDisponible(fromAccountDropdownElement);
-        pausas();
+        esperas();
 
         String toAccount = seleccionarCuentaDestinoDiferente(toAccountDropdownElement, fromAccount);
-        pausas();
+        esperas();
 
         transferButton.click();
-        pausaPantalla();
+        esperaPantalla();
 
         boolean transferenciaExitosa = driver.findElements(By.cssSelector("#showResult h1.title")).size() > 0;
         boolean mensajeErrorVisible = driver.findElements(By.cssSelector("#showError")).size() > 0
@@ -344,7 +344,7 @@ public class miPrimerSimulacion {
 
     @After
     public void after() {
-        pausa(400);
+        espera(400);
         if (driver != null) {
             driver.quit();
         }
@@ -365,14 +365,14 @@ public class miPrimerSimulacion {
 
         usernameField.clear();
         escribirLento(usernameField, username, 90);
-        pausas();
+        esperas();
 
         passwordField.clear();
         escribirLento(passwordField, password, 90);
-        pausas();
+        esperas();
 
         loginButton.click();
-        pausaPantalla();
+        esperaPantalla();
     }
 
     private String seleccionarPrimeraOpcionDisponible(WebElement selectElement) {
@@ -401,14 +401,14 @@ public class miPrimerSimulacion {
         return optionText;
     }
 
-    private void escribirLento(WebElement elemento, String texto, int pausaMs) {
+    private void escribirLento(WebElement elemento, String texto, int esperaMs) {
         for (char c : texto.toCharArray()) {
             elemento.sendKeys(String.valueOf(c));
-            pausa(pausaMs);
+            espera(esperaMs);
         }
     }
 
-    private void pausa(int milisegundos) {
+    private void espera(int milisegundos) {
         if (!MODO_DEMO_LENTO) {
             return;
         }
@@ -419,11 +419,11 @@ public class miPrimerSimulacion {
         }
     }
 
-    private void pausas() {
-        pausa(450);
+    private void esperas() {
+        espera(450);
     }
 
-    private void pausaPantalla() {
-        pausa(950);
+    private void esperaPantalla() {
+        espera(950);
     }
 }
